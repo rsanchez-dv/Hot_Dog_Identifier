@@ -9,11 +9,11 @@ app = Flask(__name__)
 @app.route('/', methods=['GET', 'POST'])
 def home():
 	message = "HELLO WORLD"
-	return message
+	return render_template('index.html')
 
 @app.route('/predict', methods=['GET','POST'])
 def predict():
-	return "Not Hotdog"
-
+	print(request.data)
+	return "RESPONSE"
 if __name__ == '__main__':
 	app.run(debug=True)
