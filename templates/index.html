@@ -70,24 +70,51 @@
       </div>
     </nav>
 
-    <h1>Hello World</h1>
+    <h1>HotDog Detector</h1>
     <div id="drop-area">
       <label for="formFileLg" class="form-label"
-        >Large file input example</label
+        >This was a project created using Tensorflow to analyze images to detect whether a hotdog is in an uploaded image.</label
       >
       <input
         class="form-control form-control-lg"
         id="formFileLg"
         type="file"
         name="image"
+        onchange="readURL(this)"
       />
       <button id="submit" type="submit">Submit</button>
-      <div id="results"></div>
+
+      <div id="resultContainer" style="display:none;">
+        <h2>Results:</h2>
+        <p id="result">Pending result</p>
+        <img id="uploadedImage" src="#" alt="Uploaded Image"/>
+      </div>
+
     </div>
   </body>
   <script>
+    function readURL(input) {
+      if (input.files && input.files[0]) {
+        console.log("HELLO WORLD")
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            console.log(e)
+            
+            $('#uploadedImage')
+                .attr('src', e.target.result)
+                .width(180)
+                .height(180);
+        };
+        reader.readAsDataURL(input.files[0]);
+      }
+    }
     $(function () {
+      // $("#formFileLg").change(function (e){
+      //   console.log(e.target.files)
+      //   $('#uploadedImage').attr('src', e.target.files).width(150).height(200);
+      // });
       $("#submit").click(function (e) {
+        console.log(e)
         uploadedImage = $("#formFileLg")[0].files[0];
         let formData = new FormData();
         formData.append("image", uploadedImage);
@@ -103,7 +130,14 @@
             console.log(data);
           },
           success: function (data) {
-            console.log(data);
+            console.log(data)
+            if(data === "Not Hot Dog"){
+              $('#result').text("❌ 🌭 Not Hot Dog ")
+            }else{
+              $('#result').text("✔️ 🌭 Hot Dog ")
+            }
+            
+            
           },
         });
       });

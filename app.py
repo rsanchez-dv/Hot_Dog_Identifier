@@ -21,15 +21,15 @@ def home():
 
 @app.route('/predict', methods=['GET', 'POST'])
 def predict():
-    print(request.files)
-    # Returns a byte file
-    rawImage = request.files["image"].read()
-    # Converts bytes into usable format
-    print(rawImage)
-    imageData = Image.frombytes('RGBA', (180, 180), rawImage)
-    print(imageData.size)
+    # Read in image from request
+    rawImage = request.files["image"]
+    # Open image using PIL
+    imageData = Image.open(rawImage)
+    # Resize image to match size used during training
+    imageData = imageData.resize((180, 180))
+    # Does something related to dims
     new_image = np.expand_dims(image.img_to_array(imageData), axis=0)
-    print(new_image)
+    # Push it into the predict model
     result = loaded_model.predict(new_image)
     print(result)
     if result[0][0] > 0:
