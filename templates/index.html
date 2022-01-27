@@ -95,7 +95,7 @@
   <script>
     function readURL(input) {
       if (input.files && input.files[0]) {
-        console.log("HELLO WORLD")
+        $("#resultContainer").hide()
         var reader = new FileReader();
         reader.onload = function (e) {
             console.log(e)
@@ -131,13 +131,12 @@
           },
           success: function (data) {
             console.log(data)
+            $("#resultContainer").show();
             if(data === "Not Hot Dog"){
               $('#result').text("❌ 🌭 Not Hot Dog ")
             }else{
               $('#result').text("✔️ 🌭 Hot Dog ")
             }
-            
-            
           },
         });
       });
