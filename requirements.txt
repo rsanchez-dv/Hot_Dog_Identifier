@@ -4,3 +4,4 @@ tensorflow==2.6.0
 flask-heroku
 Werkzeug==2.0.1
 keras==2.6.0
+gunicorn
